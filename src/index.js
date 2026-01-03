@@ -1,3 +1,36 @@
+import { form, currentWeatherRender } from "./dom.js";
+
+
+(function() {
+    const formElements = form();
+    console.log(formElements);
+
+    formElements.button.addEventListener('click', (e) => {
+        e.preventDefault();
+        if (formElements.form.checkValidity()) {
+            getWeather(formElements.input.value);
+        }
+        else {
+            formElements.form.reportValidity();
+        }
+    });
+})();
+
+// const formElements = form();
+
+// formElements.button.addEventListener('click', (e) => {
+//     e.preventDefault();
+//     if (formElements.form.checkValidity()) {
+//         getWeather(formElements.input.value);
+//     }
+//     else {
+//         formElements.form.reportValidity();
+//     }
+// });
+
+
+
+
 async function getWeather(location) {
     try {
         const response =  await fetch(
@@ -5,6 +38,7 @@ async function getWeather(location) {
         const weatherData = await response.json();
         console.log(weatherData);
         currentWeather(weatherData);
+        currentWeatherRender(weatherData);
         weatherForecast(weatherData);
         return weatherData;
     } catch (error) {
@@ -13,7 +47,6 @@ async function getWeather(location) {
     
 }
 
-const weatherData = getWeather('Benin');
 
 function currentWeather(data) {
     console.log(`The current temperature is ${data.currentConditions.temp}`);
