@@ -40,5 +40,36 @@ function currentWeatherRender(data) {
     document.body.appendChild(currentDiv);
 }
 
+function forecastRender(data) {
+    const predictions = data.days;
+    const forecastDiv = document.createElement("div");
 
-export { form, currentWeatherRender };
+    const forecastText = document.createElement("div");
+    forecastText.textContent = "Weather forecast for the next 14 days";
+    forecastDiv.appendChild(forecastText);
+
+    const predictionsCont = document.createElement("div");
+    for (let i = 1; i <= predictions.length - 1; i++) {
+        const div = document.createElement("div");
+
+        const date = document.createElement("div");
+        date.textContent = `Date: ${predictions[i].datetime}`;
+        div.appendChild(date);
+
+        const condition = document.createElement("div");
+        condition.textContent = `Conditions: ${predictions[i].conditions}`;
+        div.appendChild(condition);
+
+        const temp = document.createElement("div");
+        temp.textContent = `Temperature: ${[predictions[i].temp]}`;
+        div.appendChild(temp);
+
+        predictionsCont.appendChild(div);
+    }
+    forecastDiv.appendChild(predictionsCont);
+    document.body.appendChild(forecastDiv);
+
+}
+
+
+export { form, currentWeatherRender, forecastRender };

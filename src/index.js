@@ -1,4 +1,4 @@
-import { form, currentWeatherRender } from "./dom.js";
+import { form, currentWeatherRender, forecastRender } from "./dom.js";
 
 
 (function() {
@@ -40,6 +40,7 @@ async function getWeather(location) {
         currentWeather(weatherData);
         currentWeatherRender(weatherData);
         weatherForecast(weatherData);
+        forecastRender(weatherData);
         return weatherData;
     } catch (error) {
         console.log(error);
