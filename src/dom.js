@@ -26,27 +26,31 @@ function form() {
     return {input, button, form};
 }
 
-function currentWeatherRender(data) {
-    const currentDiv = document.createElement("div");
+function currentWeatherRender(data, div) {
+    div.replaceChildren();
 
     const currentTemperature = document.createElement("div");
     currentTemperature.textContent = `Current Temperature: ${data.currentConditions.temp}`;
-    currentDiv.appendChild(currentTemperature);
+    div.appendChild(currentTemperature);
+
+    const currentCondition = document.createElement("div");
+    currentCondition.textContent = `Condition: ${data.currentConditions.conditions}`;
+    div.appendChild(currentCondition);
 
     const currentdescription = document.createElement("div");
     currentdescription.textContent = data.description;
-    currentDiv.appendChild(currentdescription);
+    div.appendChild(currentdescription);
 
-    document.body.appendChild(currentDiv);
+    document.body.appendChild(div);
 }
 
-function forecastRender(data) {
+function forecastRender(data, div) {
     const predictions = data.days;
-    const forecastDiv = document.createElement("div");
+    div.replaceChildren();
 
     const forecastText = document.createElement("div");
     forecastText.textContent = "Weather forecast for the next 14 days";
-    forecastDiv.appendChild(forecastText);
+    div.appendChild(forecastText);
 
     const predictionsCont = document.createElement("div");
     for (let i = 1; i <= predictions.length - 1; i++) {
@@ -66,8 +70,8 @@ function forecastRender(data) {
 
         predictionsCont.appendChild(div);
     }
-    forecastDiv.appendChild(predictionsCont);
-    document.body.appendChild(forecastDiv);
+    div.appendChild(predictionsCont);
+    document.body.appendChild(div);
 
 }
 
