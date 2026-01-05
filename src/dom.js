@@ -30,7 +30,7 @@ function currentWeatherRender(data, div) {
     div.replaceChildren();
 
     const currentTemperature = document.createElement("div");
-    currentTemperature.textContent = `Current Temperature: ${data.currentConditions.temp}`;
+    currentTemperature.textContent = `Current Temperature: ${data.currentConditions.temp}°F`;
     div.appendChild(currentTemperature);
 
     const currentCondition = document.createElement("div");
@@ -49,12 +49,14 @@ function forecastRender(data, div) {
     div.replaceChildren();
 
     const forecastText = document.createElement("div");
+    forecastText.className = "forecast-title";
     forecastText.textContent = "Weather forecast for the next 14 days";
     div.appendChild(forecastText);
 
     const predictionsCont = document.createElement("div");
     for (let i = 1; i <= predictions.length - 1; i++) {
         const div = document.createElement("div");
+        div.className = "predict";
 
         const date = document.createElement("div");
         date.textContent = `Date: ${predictions[i].datetime}`;
@@ -65,7 +67,8 @@ function forecastRender(data, div) {
         div.appendChild(condition);
 
         const temp = document.createElement("div");
-        temp.textContent = `Temperature: ${[predictions[i].temp]}`;
+        temp.className = "temp";
+        temp.textContent = `Temperature: ${[predictions[i].temp]}°F`;
         div.appendChild(temp);
 
         predictionsCont.appendChild(div);
@@ -75,5 +78,11 @@ function forecastRender(data, div) {
 
 }
 
+function errorRender(div, error) {
+    div.replaceChildren();
+    div.textContent = error;
+    document.body.appendChild(div);
+}
 
-export { form, currentWeatherRender, forecastRender };
+
+export { form, currentWeatherRender, forecastRender, errorRender };
