@@ -1,5 +1,6 @@
 import "./styles.css"
 import { form, currentWeatherRender, forecastRender, errorRender } from "./dom.js";
+import loadingImage from "./images/loading.gif";
 
 function createDivs() {
     const currentDiv = document.createElement("div");
@@ -8,16 +9,20 @@ function createDivs() {
     forecastDiv.className = "forcecast"
     const imageDiv = document.createElement("div");
     imageDiv.className = "img";
+    const loadingDiv = document.createElement("div");
 
-    return {currentDiv, forecastDiv, imageDiv};
+    return {currentDiv, forecastDiv, imageDiv, loadingDiv};
 }
 
+const cont = createDivs();
 
 (function() {
     const formElements = form();
+    document.body.appendChild(cont.loadingDiv);
     formElements.button.addEventListener('click', (e) => {
         e.preventDefault();
         if (formElements.form.checkValidity()) {
+            loading(cont.loadingDiv);
             getWeather(formElements.input.value);
         }
         else {
@@ -25,8 +30,6 @@ function createDivs() {
         }
     });
 })();
-
-const cont = createDivs();
 
 
 async function getWeather(location) {
@@ -60,10 +63,18 @@ async function getgif(condition, div) {
         img.alt = "failed to load image";
         div.appendChild(img);
         document.body.appendChild(div);
+        cont.loadingDiv.replaceChildren();
     } catch(error) {
         console.log(error);
     }
     
+}
+
+function loading(div) {
+    div.replaceChildren();
+    const img = document.createElement("img");
+    img.src = loadingImage;
+    div.appendChild(img);
 }
 
 
